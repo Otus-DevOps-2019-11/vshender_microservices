@@ -1,0 +1,5 @@
+REPOSITORY                 TAG                 IMAGE ID            CREATED             SIZE
+vshender/ubuntu-tmp-file   latest              7d16269fca94        8 seconds ago       64.2MB
+ubuntu                     latest              4e5021d210f6        11 days ago         64.2MB
+
+The output of `docker inspect` for container has "State", "HostConfig", "Mounts", and "NetworkSettings" sections containing information about a running system.
