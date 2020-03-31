@@ -25,3 +25,11 @@ vshender microservices repository
   ```
 
   `htop` from the last command displays all host processes.
+- The reddit application docker image is built.
+
+  ```
+  $ cd docker-monolith
+  $ docker build -t reddit:latest .
+  $ docker images -a
+  $ docker run --name reddit -d --network=host reddit:latest
+  ```
