@@ -42,3 +42,12 @@ vshender microservices repository
       --description="Allow PUMA connections" \
       --direction=INGRESS
   ```
+- The reddit application docker image is pushed to Docker Hub.
+
+  ```
+  $ docker login
+  $ docker tag reddit:latest vshender/otus-reddit:1.0
+  $ docker push vshender/otus-reddit:1.0
+  $ eval $(docker-machine env --unset)
+  $ docker run --name reddit -d -p 9292:9292 vshender/otus-reddit:1.0
+  ```
