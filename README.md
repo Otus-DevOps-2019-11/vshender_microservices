@@ -33,3 +33,12 @@ vshender microservices repository
   $ docker images -a
   $ docker run --name reddit -d --network=host reddit:latest
   ```
+- Firewall for the reddit application is configured.
+
+  ```
+  $ gcloud compute firewall-rules create reddit-app \
+      --allow tcp:9292 \
+      --target-tags=docker-machine \
+      --description="Allow PUMA connections" \
+      --direction=INGRESS
+  ```
