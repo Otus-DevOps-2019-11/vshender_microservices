@@ -94,3 +94,29 @@ vshender microservices repository
   $ docker run -d --network=reddit --network-alias=comment vshender/comment:1.0
   $ docker run -d --network=reddit -p 9292:9292 vshender/ui:1.0
   ```
+- The application containers were ran using different network aliases.
+
+  ```
+  $ docker kill $(docker ps -q)
+  $ docker run -d \
+      --network=reddit \
+      --network-alias=post_database \
+      --network-alias=comment_database \
+      mongo:latest
+  $ docker run -d \
+      --network=reddit \
+      --network-alias=post_service \
+      -e POST_DATABASE_HOST=post_database \
+      vshender/post:1.0
+  $ docker run -d \
+      --network=reddit \
+      --network-alias=comment_service \
+      -e COMMENT_DATABASE_HOST=comment_database \
+      vshender/comment:1.0
+  $ docker run -d \
+      --network=reddit \
+      -p 9292:9292 \
+      -e POST_SERVICE_HOST=post_service \
+      -e COMMENT_SERVICE_HOST=comment_service \
+      vshender/ui:1.0
+  ```
