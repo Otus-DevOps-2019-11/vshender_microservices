@@ -3,7 +3,7 @@ vshender microservices repository
 
 ## Homework #15: docker-2
 
-- Outputs of `docker inspect` for container and image are compared.
+- The outputs of `docker inspect` for container and image are compared.
 - A docker machine is created in GCP.
 
   ```
@@ -50,4 +50,19 @@ vshender microservices repository
   $ docker push vshender/otus-reddit:1.0
   $ eval $(docker-machine env --unset)
   $ docker run --name reddit -d -p 9292:9292 vshender/otus-reddit:1.0
+  ```
+- The reddit application deployment is implemented.
+
+  ```
+  $ cd docker-monolith/infra
+
+  $ cd packer
+  $ packer build -var-file=variables.json.example docker-host.json
+
+  $ cd ../terraform
+  $ cp terraform.tfvars.example terraform.tfvars
+  $ terraform apply -auto-approve
+
+  $ cd ../ansible
+  $ ansible-playbook site.yml
   ```
