@@ -66,3 +66,8 @@ vshender microservices repository
   $ cd ../ansible
   $ ansible-playbook site.yml
   ```
+
+
+## Homework #16: docker-3
+
+- The reddit application microservices code is added to the repository.
