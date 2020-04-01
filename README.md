@@ -71,3 +71,26 @@ vshender microservices repository
 ## Homework #16: docker-3
 
 - The reddit application microservices code is added to the repository.
+- Dockerfiles for building the application images are added.
+
+  ```
+  $ eval $(docker-machine env docker-host)
+  $ cd src
+
+  $ docker build -t vshender/post:1.0 ./post-py
+  $ docker build -t vshender/comment:1.0 ./comment
+  $ docker build -t vshender/ui:1.0 ./ui
+
+  $ docker images
+  ...
+  vshender/ui            1.0                 8a2611b70db3        13 hours ago        785MB
+  vshender/comment       1.0                 3e81cc25be92        13 hours ago        783MB
+  vshender/post          1.0                 eddd02228a5d        13 hours ago        110MB
+  ...
+
+  $ docker network create reddit
+  $ docker run -d --network=reddit --network-alias=post_db --network-alias=comment_db mongo:latest
+  $ docker run -d --network=reddit --network-alias=post vshender/post:1.0
+  $ docker run -d --network=reddit --network-alias=comment vshender/comment:1.0
+  $ docker run -d --network=reddit -p 9292:9292 vshender/ui:1.0
+  ```
