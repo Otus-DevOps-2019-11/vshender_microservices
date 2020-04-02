@@ -1,17 +1,14 @@
-FROM ubuntu:16.04
+FROM ruby:2.5-alpine
 
-RUN apt-get update \
-    && apt-get install --no-install-recommends -y ruby-full=1:2.3.0+1 ruby-dev=1:2.3.0+1 build-essential=12.1ubuntu2 \
-    && rm -rf /var/lib/apt/lists/* \
-    && gem install bundler:2.1.4 --no-ri --no-rdoc
-
-ENV APP_HOME /app
-RUN mkdir $APP_HOME
-WORKDIR $APP_HOME
+WORKDIR /app
 
 COPY Gemfile* $APP_HOME/
-RUN bundle install
-COPY . $APP_HOME
+RUN apk --no-cache --update add build-base=0.5-r1 \
+    && bundle install \
+    && apk del build-base \
+    && rm -rf /root/.bundle
+
+COPY . /app
 
 ENV POST_SERVICE_HOST post
 ENV POST_SERVICE_PORT 5000

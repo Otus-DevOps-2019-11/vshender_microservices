@@ -131,3 +131,15 @@ vshender microservices repository
   vshender/ui            2.0                 92a971bcd851        About an hour ago   413MB
   ...
   ```
+- The sizes of the images were optimized using alpine base images.
+
+  ```
+  $ docker build -t vshender/post:2.0 ./post-py
+  $ docker build -t vshender/comment:3.0 ./comment
+  $ docker build -t vshender/ui:2.0 ./ui
+  $ docker images
+  ...
+  vshender/ui            5.0                 f2868053f86b        11 minutes ago      70.9MB
+  vshender/comment       5.0                 16a976961632        14 minutes ago      68.8MB
+  vshender/post          2.0                 e192d362ab91        20 minutes ago      106MB
+  ```
