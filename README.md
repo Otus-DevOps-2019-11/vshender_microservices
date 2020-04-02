@@ -179,3 +179,74 @@ vshender microservices repository
               ...
     ...
     ```
+- The application containers were run on two bridge networks so that `ui` service didn't have access to the DB.
+
+  ```
+  $ docker network create back_net --subnet=10.0.2.0/24
+  $ docker network create front_net --subnet=10.0.1.0/24
+
+  $ docker run -d --network=front_net -p 9292:9292 --name ui vshender/ui:1.0
+  $ docker run -d --network=back_net --name comment vshender/comment:1.0
+  $ docker run -d --network=back_net --name post vshender/post:1.0
+  $ docker run -d --network=back_net --name mongo_db --network-alias=post_db --network-alias=comment_db mongo:latest
+
+  $ docker network connect front_net post
+  $ docker network connect front_net comment
+
+  docker-user@docker-host:~$ docker-machine ssh docker-host
+  docker-user@docker-host:~$ sudo apt update && sudo apt install bridge-utils
+
+  docker-user@docker-host:~$ sudo docker network ls
+  NETWORK ID          NAME                DRIVER              SCOPE
+  1af853b61403        back_net            bridge              local
+  6fd07b1132ce        bridge              bridge              local
+  8f055d1c48aa        front_net           bridge              local
+  f305ef17bd01        host                host                local
+  0388399f09e7        none                null                local
+
+  docker-user@docker-host:~$ ifconfig | grep br
+  br-1af853b61403 Link encap:Ethernet  HWaddr 02:42:4f:18:e0:0a
+  br-8f055d1c48aa Link encap:Ethernet  HWaddr 02:42:83:62:f3:85
+
+  docker-user@docker-host:~$ brctl show br-1af853b61403
+  bridge name             bridge id               STP enabled     interfaces
+  br-1af853b61403         8000.02424f18e00a       no              veth20b5c99
+                                                                  veth545d995
+                                                                  veth920337d
+  docker-user@docker-host:~$ brctl show br-8f055d1c48aa
+  bridge name             bridge id               STP enabled     interfaces
+  br-8f055d1c48aa         8000.02428362f385       no              veth2d8c526
+                                                                  veth39230ec
+                                                                  veth58234b0
+
+  docker-user@docker-host:~$ sudo iptables -nL -t nat
+  Chain PREROUTING (policy ACCEPT)
+  target     prot opt source               destination
+  DOCKER     all  --  0.0.0.0/0            0.0.0.0/0            ADDRTYPE match dst-type LOCAL
+
+  Chain INPUT (policy ACCEPT)
+  target     prot opt source               destination
+
+  Chain OUTPUT (policy ACCEPT)
+  target     prot opt source               destination
+  DOCKER     all  --  0.0.0.0/0           !127.0.0.0/8          ADDRTYPE match dst-type LOCAL
+
+  Chain POSTROUTING (policy ACCEPT)
+  target     prot opt source               destination
+  MASQUERADE  all  --  10.0.1.0/24          0.0.0.0/0
+  MASQUERADE  all  --  10.0.2.0/24          0.0.0.0/0
+  MASQUERADE  all  --  172.18.0.0/16        0.0.0.0/0
+  MASQUERADE  all  --  172.17.0.0/16        0.0.0.0/0
+  MASQUERADE  tcp  --  10.0.1.2             10.0.1.2             tcp dpt:9292
+
+  Chain DOCKER (2 references)
+  target     prot opt source               destination
+  RETURN     all  --  0.0.0.0/0            0.0.0.0/0
+  RETURN     all  --  0.0.0.0/0            0.0.0.0/0
+  RETURN     all  --  0.0.0.0/0            0.0.0.0/0
+  RETURN     all  --  0.0.0.0/0            0.0.0.0/0
+  DNAT       tcp  --  0.0.0.0/0            0.0.0.0/0            tcp dpt:9292 to:10.0.1.2:9292
+
+  docker-user@docker-host:~$ ps -ef | grep docker-proxy
+  root     25503  5563  0 17:45 ?        00:00:00 /usr/bin/docker-proxy -proto tcp -host-ip 0.0.0.0 -host-port 9292 -container-ip 10.0.1.2 -container-port 9292
+  ```
