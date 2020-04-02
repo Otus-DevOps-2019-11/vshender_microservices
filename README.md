@@ -143,3 +143,9 @@ vshender microservices repository
   vshender/comment       5.0                 16a976961632        14 minutes ago      68.8MB
   vshender/post          2.0                 e192d362ab91        20 minutes ago      106MB
   ```
+- A docker volume was used to store MongoDB data.
+
+  ```
+  $ docker volume create reddit_db
+  $ docker run -d --network=reddit --network-alias=post_db --network-alias=comment_db -v reddit_db:/data/db mongo:latest
+  ```
