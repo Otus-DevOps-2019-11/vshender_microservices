@@ -250,3 +250,19 @@ vshender microservices repository
   docker-user@docker-host:~$ ps -ef | grep docker-proxy
   root     25503  5563  0 17:45 ?        00:00:00 /usr/bin/docker-proxy -proto tcp -host-ip 0.0.0.0 -host-port 9292 -container-ip 10.0.1.2 -container-port 9292
   ```
+- A `docker-compose.yml` file was added to run the application.
+
+  ```
+  $ export USERNAME=vshender
+  $ cd src
+
+  $ docker-compose up -d
+  $ docker-compose ps
+      Name                  Command             State           Ports
+  ----------------------------------------------------------------------------
+  src_comment_1   puma                          Up
+  src_db_1        docker-entrypoint.sh mongod   Up      27017/tcp
+  src_post_1      python3 post_app.py           Up
+  src_ui_1        puma                          Up      0.0.0.0:9292->9292/tcp
+
+  ```
