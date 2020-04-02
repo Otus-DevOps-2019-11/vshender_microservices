@@ -149,3 +149,33 @@ vshender microservices repository
   $ docker volume create reddit_db
   $ docker run -d --network=reddit --network-alias=post_db --network-alias=comment_db -v reddit_db:/data/db mongo:latest
   ```
+
+
+## Homework 17: docker-4
+
+- `none` and `host` network drivers are compared.
+
+  - None driver:
+
+    ```
+    $ docker run --rm --network none joffotron/docker-net-tools -c ifconfig
+    lo        Link encap:Local Loopback
+              ...
+    ```
+  - Host driver:
+
+    ```
+    $ docker run --rm --network host joffotron/docker-net-tools -c ifconfig
+    br-bf66b55fd9b7 Link encap:Ethernet  HWaddr 02:42:1B:02:08:96
+              ...
+    docker0   Link encap:Ethernet  HWaddr 02:42:C0:10:15:7D
+              ...
+    ...
+
+    $ docker-machine ssh docker-host ifconfig
+    br-bf66b55fd9b7 Link encap:Ethernet  HWaddr 02:42:1B:02:08:96
+              ...
+    docker0   Link encap:Ethernet  HWaddr 02:42:C0:10:15:7D
+              ...
+    ...
+    ```
