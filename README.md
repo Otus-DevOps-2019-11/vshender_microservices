@@ -268,3 +268,16 @@ vshender microservices repository
   ```
 - The `docker-compose.yml` was changed to run the application containers on two bridge networks.
 - The `docker-compose.yml` was parameterized.
+- The project name was changed.
+
+  ```
+  $ docker-compose -p reddit up -d
+  Creating network "reddit_back_net" with the default driver
+  Creating network "reddit_front_net" with the default driver
+  Creating volume "reddit_post_db" with default driver
+  Creating reddit_db_1      ... done
+  Creating reddit_ui_1      ... done
+  Creating reddit_post_1    ... done
+  Creating reddit_comment_1 ... done
+
+  ```
