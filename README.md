@@ -281,3 +281,4 @@ vshender microservices repository
   Creating reddit_comment_1 ... done
 
   ```
+- The `docker-compose.override.yml` file was added.
