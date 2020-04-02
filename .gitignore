@@ -1,5 +1,6 @@
 *~
 \#*\#
+.env
 .envrc
 *.tfstate
 *.tfstate.*.backup

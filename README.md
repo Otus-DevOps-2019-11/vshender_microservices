@@ -267,3 +267,4 @@ vshender microservices repository
 
   ```
 - The `docker-compose.yml` was changed to run the application containers on two bridge networks.
+- The `docker-compose.yml` was parameterized.
