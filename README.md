@@ -120,3 +120,14 @@ vshender microservices repository
       -e COMMENT_SERVICE_HOST=comment_service \
       vshender/ui:1.0
   ```
+- The sizes of `comment` and `ui` images were optimized using an ubuntu base image.
+
+  ```
+  $ docker build -t vshender/comment:2.0 ./comment
+  $ docker build -t vshender/ui:2.0 ./ui
+  $ docker images
+  ...
+  vshender/comment       2.0                 ba6920b63efb        59 minutes ago      410MB
+  vshender/ui            2.0                 92a971bcd851        About an hour ago   413MB
+  ...
+  ```
