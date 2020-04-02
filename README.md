@@ -266,3 +266,4 @@ vshender microservices repository
   src_ui_1        puma                          Up      0.0.0.0:9292->9292/tcp
 
   ```
+- The `docker-compose.yml` was changed to run the application containers on two bridge networks.
