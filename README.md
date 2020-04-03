@@ -282,3 +282,17 @@ vshender microservices repository
 
   ```
 - The `docker-compose.override.yml` file was added.
+
+
+# Homework 18: gitlab-ci-1
+
+- Gitlab deployment was implemented.
+
+  ```
+  $ cd gitlab-ci/terraform
+  $ cp terraform.tfvars.example terraform.tfvars
+  $ terraform apply -auto-approve
+
+  $ cd ../ansible
+  $ ansible-playbook site.yml
+  ```

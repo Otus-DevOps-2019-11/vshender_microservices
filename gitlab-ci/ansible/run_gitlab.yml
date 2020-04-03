@@ -1,0 +1,28 @@
+---
+- name: Run Gitlab
+  hosts: gitlab
+  become: yes
+  gather_facts: no
+
+  vars:
+    gitlab_dir: /srv/gitlab
+
+  tasks:
+    - name: Create Gitlab directories
+      file:
+        path: "{{ gitlab_dir }}/{{ item }}"
+        state: directory
+      with_items:
+        - config
+        - data
+        - logs
+    - name: Copy docker-compose.yml
+      template:
+        src: templates/docker-compose.yml.j2
+        dest: "{{ gitlab_dir }}/docker-compose.yml"
+    - name: Install docker-compose
+      pip:
+        name: docker-compose
+    - name: Start Gitlab
+      docker_compose:
+        project_src: "{{ gitlab_dir }}"
