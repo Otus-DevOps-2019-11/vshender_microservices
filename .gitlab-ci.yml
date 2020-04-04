@@ -24,14 +24,24 @@ build_job:
     - docker login --username $DOCKER_HUB_LOGIN --password $DOCKER_HUB_PASSWD
     - docker push $DOCKER_IMAGE_NAME
 
+ # Old unit tests implementation. Left here for OTUS CI checks.
+ #
+ # test_unit_job:
+ #   image: ruby:2.4.2
+ #   stage: test
+ #   services:
+ #     - mongo:latest
+ #   script:
+ #     - bundle install
+ #     - ruby simpletest.rb
+
 test_unit_job:
-  image: ruby:2.4.2
   stage: test
   services:
+    - docker:19.03.1-dind
     - mongo:latest
   script:
-    - bundle install
-    - ruby simpletest.rb
+    - docker run $DOCKER_IMAGE_NAME ruby simpletest.rb
 
 test_integration_job:
   stage: test
