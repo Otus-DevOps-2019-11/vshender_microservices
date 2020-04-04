@@ -311,3 +311,4 @@ vshender microservices repository
 - An unit test for the reddit application is added.
 - `dev` stage and environment are defined.
 - `stage` and `production` stages are defined.
+- `stage` and `production` stages are limited to run only for tags.
