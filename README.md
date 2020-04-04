@@ -297,3 +297,13 @@ vshender microservices repository
   $ ansible-playbook site.yml
   ```
 - Pipeline definition was added.
+- A Gitlab runner was started and registered.
+
+  ```
+  $ ssh -i ~/.ssh/appuser gitlab@34.76.120.42
+  $ sudo docker run -d --name gitlab-runner --restart always \
+  >   -v /srv/gitlab-runner/config:/etc/gitlab-runner \
+  >   -v /var/run/docker.sock:/var/run/docker.sock \
+  >   gitlab/gitlab-runner:latest
+  $ sudo docker exec -it gitlab-runner gitlab-runner register --run-untagged --locked=false
+  ```
