@@ -296,3 +296,4 @@ vshender microservices repository
   $ cd ../ansible
   $ ansible-playbook site.yml
   ```
+- Pipeline definition was added.
