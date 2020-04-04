@@ -312,3 +312,4 @@ vshender microservices repository
 - `dev` stage and environment are defined.
 - `stage` and `production` stages are defined.
 - `stage` and `production` stages are limited to run only for tags.
+- A dynamic environment for branches was added.
