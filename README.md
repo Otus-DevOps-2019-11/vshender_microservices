@@ -308,3 +308,4 @@ vshender microservices repository
   $ sudo docker exec -it gitlab-runner gitlab-runner register --run-untagged --locked=false
   ```
 - The reddit application code was added to the repository.
+- An unit test for the reddit application is added.
