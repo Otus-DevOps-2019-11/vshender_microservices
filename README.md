@@ -310,3 +310,4 @@ vshender microservices repository
 - The reddit application code was added to the repository.
 - An unit test for the reddit application is added.
 - `dev` stage and environment are defined.
+- `stage` and `production` stages are defined.
