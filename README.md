@@ -307,3 +307,4 @@ vshender microservices repository
   >   gitlab/gitlab-runner:latest
   $ sudo docker exec -it gitlab-runner gitlab-runner register --run-untagged --locked=false
   ```
+- The reddit application code was added to the repository.
