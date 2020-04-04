@@ -313,3 +313,21 @@ vshender microservices repository
 - `stage` and `production` stages are defined.
 - `stage` and `production` stages are limited to run only for tags.
 - A dynamic environment for branches was added.
+- The reddit application container building is implemented.
+
+  Registering GitLab runner to use `docker` and `privileged` mode in order to be able to build docker images:
+  ```
+  $ ssh -i ~/.ssh/appuser gitlab@34.76.120.42
+  $ sudo docker run -d --name gitlab-runner --restart always \
+  >   -v /srv/gitlab-runner/config:/etc/gitlab-runner \
+  >   -v /var/run/docker.sock:/var/run/docker.sock \
+  >   gitlab/gitlab-runner:latest
+  $ sudo docker exec -it gitlab-runner gitlab-runner register \
+  >   --url http://34.76.120.42/ \
+  >   --registration-token A1QzuKmatFF3QYoxT-M4 \
+  >   --executor docker \
+  >   --docker-image "docker:19.03.1" \
+  >   --docker-privileged \
+  >   --run-untagged \
+  >   --locked=false
+  ```
