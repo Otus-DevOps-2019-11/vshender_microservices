@@ -1,0 +1,17 @@
+---
+- name: Deploy reddit application
+  hosts: all
+  become: yes
+  gather_facts: no
+
+  vars:
+    reddit_app_image: vshender/otus-reddit:1.0
+
+  tasks:
+    - name: Run reddit app container
+      docker_container:
+        name: reddit
+        image: "{{ reddit_app_image }}"
+        ports:
+          - "9292:9292"
+      tags: deploy_app
