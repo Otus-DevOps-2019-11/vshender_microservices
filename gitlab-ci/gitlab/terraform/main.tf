@@ -47,3 +47,26 @@ resource "google_compute_firewall" "firewall_gitlab" {
 
   target_tags = ["gitlab"]
 }
+
+resource "google_compute_firewall" "firewall_puma" {
+  name = "allow-puma-default"
+
+  network = "default"
+
+  allow {
+    protocol = "tcp"
+    ports    = [9292]
+  }
+
+  source_ranges = ["0.0.0.0/0"]
+
+  target_tags = ["reddit-app"]
+}
+
+module "storage-bucket" {
+  source  = "SweetOps/storage-bucket/google"
+  version = "0.3.1"
+
+  name = "${var.project}-gitlab-env-tf-state"
+  location = var.region
+}

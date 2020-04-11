@@ -289,7 +289,7 @@ vshender microservices repository
 - Gitlab deployment was implemented.
 
   ```
-  $ cd gitlab-ci/terraform
+  $ cd gitlab-ci/gitlab/terraform
   $ cp terraform.tfvars.example terraform.tfvars
   $ terraform apply -auto-approve
 
@@ -331,3 +331,10 @@ vshender microservices repository
   >   --run-untagged \
   >   --locked=false
   ```
+- A server creation and the application deployment for review environment is implemented.
+
+  The following GitLab CI variables are required to be defined:
+  - `DOCKER_HUB_LOGIN` -- docker hub login;
+  - `DOCKER_HUB_PASSWD` -- docker hub password;
+  - `GCP_PROJECT_NAME` -- a name of GCP project where GitLab is deployed;
+  - `GCP_SERVICE_ACCOUNT_KEY` -- base64-encoded GCP service account key.

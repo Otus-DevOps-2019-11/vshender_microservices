@@ -58,15 +58,39 @@ deploy_dev_job:
 
 branch review:
   stage: review
-  script:
+  image: ubuntu:18.04
+  before_script:
     - echo "Deploy to $CI_ENVIRONMENT_SLUG"
+    - cd gitlab-ci/environment
+    - ./scripts/init-terraform.sh
+  script:
+    - terraform apply -auto-approve
+    - echo "ENV_IP=$(terraform output | grep env_instance_ip | awk '{ print $3 }')" > deploy.env
+  artifacts:
+    reports:
+      dotenv: gitlab-ci/environment/deploy.env
   environment:
     name: branch/$CI_COMMIT_REF_NAME
-    url: http://$CI_ENVIRONMENT_SLUG.example.com
+    url: "http://$ENV_IP:9292/"
+    on_stop: stop branch preview
   only:
     - branches
   except:
     - master
+
+stop branch preview:
+  stage: review
+  image: ubuntu:18.04
+  before_script:
+    - echo "Destroy $CI_ENVIRONMENT_SLUG"
+    - cd gitlab-ci/environment
+    - ./scripts/init-terraform.sh
+  script:
+    - terraform destroy -auto-approve
+  when: manual
+  environment:
+    name: branch/$CI_COMMIT_REF_NAME
+    action: stop
 
 staging:
   stage: stage
