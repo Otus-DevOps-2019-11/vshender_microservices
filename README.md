@@ -344,3 +344,6 @@ vshender microservices repository
   $ cd gitlab-ci/gitlab/ansible
   $ ansible-playbook site.yml --extra-vars "runner_token=uLEPyD8FR_9mjEhx_cG3 runners_count=2" --tags=create_runners
   ```
+- GitLab integration with Slack is implemented.
+
+  You can check GitLab notifications here: https://devops-team-otus.slack.com/archives/GSFU43CHG.
