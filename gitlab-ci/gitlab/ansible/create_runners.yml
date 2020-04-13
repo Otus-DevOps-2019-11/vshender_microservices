@@ -1,0 +1,33 @@
+---
+- name: Create Gitlab runners
+  hosts: gitlab
+  become: yes
+  gather_facts: no
+
+  vars:
+    runner_token: unknown
+    runners_count: 1
+
+  tasks:
+    - name: Create Gitlab runners
+      command: >-
+        docker run -d --name gitlab-runner-{{ item }} --restart always
+        -v /srv/gitlab-runner/config:/etc/gitlab-runner
+        -v /var/run/docker.sock:/var/run/docker.sock
+        gitlab/gitlab-runner:latest
+      with_sequence: start=1 end={{ runners_count }}
+      tags: create_runners
+
+    - name: Register Gitlab runners
+      command: >-
+        docker exec -it gitlab-runner-{{ item }} gitlab-runner register
+        --non-interactive
+        --url http://{{ ansible_host }}/
+        --registration-token {{ runner_token }}
+        --executor docker
+        --docker-image "docker:19.03.1"
+        --docker-privileged
+        --run-untagged
+        --locked=false
+      with_sequence: start=1 end={{ runners_count }}
+      tags: create_runners

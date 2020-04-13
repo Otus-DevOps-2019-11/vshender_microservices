@@ -338,3 +338,9 @@ vshender microservices repository
   - `DOCKER_HUB_PASSWD` -- docker hub password;
   - `GCP_PROJECT_NAME` -- a name of GCP project where GitLab is deployed;
   - `GCP_SERVICE_ACCOUNT_KEY` -- base64-encoded GCP service account key.
+- GitLab runners creation is implemented.
+
+  ```
+  $ cd gitlab-ci/gitlab/ansible
+  $ ansible-playbook site.yml --extra-vars "runner_token=uLEPyD8FR_9mjEhx_cG3 runners_count=2" --tags=create_runners
+  ```
