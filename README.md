@@ -347,3 +347,26 @@ vshender microservices repository
 - GitLab integration with Slack is implemented.
 
   You can check GitLab notifications here: https://devops-team-otus.slack.com/archives/GSFU43CHG.
+
+
+# Homework 19: monitoring-1
+
+- Got acquainted with Prometheus.
+
+  Starting Prometheus in docker machine:
+  ```
+  $ gcloud compute firewall-rules create prometheus-default --allow tcp:9090
+  $ gcloud compute firewall-rules create puma-default --allow tcp:9292
+
+  $ export GOOGLE_PROJECT=docker-272823
+  $ docker-machine create --driver google \
+  >   --google-machine-image https://www.googleapis.com/compute/v1/projects/ubuntu-os-cloud/global/images/family/ubuntu-1804-lts \
+  >   --google-machine-type n1-standard-1 \
+  >   --google-zone europe-west1-b \
+  >   docker-host
+  $ eval $(docker-machine env docker-host)
+
+  $ docker run --rm -p 9090:9090 -d --name prometheus prom/prometheus
+
+  $ docker-machine ip docker-host
+  ```
