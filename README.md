@@ -392,3 +392,11 @@ vshender microservices repository
   $ docker-compose down
   $ docker-compose up -d
   ```
+- The created images are pushed to DockerHub.
+
+  ```
+  $ docker login
+  $ for image in ui comment post prometheus; do docker push $USERNAME/$image; done
+  ```
+
+  DockerHub profile: https://hub.docker.com/u/vshender.
