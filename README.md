@@ -382,3 +382,13 @@ vshender microservices repository
   $ for srv in ui post-py comment; do cd src/$srv; bash docker_build.sh; cd -; done
   ```
 - Prometheus service was added to `docker/docker-compose.yml` file.
+- Node-exporter was added to monitoring.
+
+  ```
+  $ cd monitoring/prometheus
+  $ docker build -t $USERNAME/prometheus .
+
+  $ cd ../../docker
+  $ docker-compose down
+  $ docker-compose up -d
+  ```
