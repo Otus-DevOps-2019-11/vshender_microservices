@@ -282,3 +282,68 @@ vshender microservices repository
 
   ```
 - The `docker-compose.override.yml` file was added.
+
+
+# Homework 18: gitlab-ci-1
+
+- Gitlab deployment was implemented.
+
+  ```
+  $ cd gitlab-ci/gitlab/terraform
+  $ cp terraform.tfvars.example terraform.tfvars
+  $ terraform apply -auto-approve
+
+  $ cd ../ansible
+  $ ansible-playbook site.yml
+  ```
+- Pipeline definition was added.
+- A Gitlab runner was started and registered.
+
+  ```
+  $ ssh -i ~/.ssh/appuser gitlab@34.76.120.42
+  $ sudo docker run -d --name gitlab-runner --restart always \
+  >   -v /srv/gitlab-runner/config:/etc/gitlab-runner \
+  >   -v /var/run/docker.sock:/var/run/docker.sock \
+  >   gitlab/gitlab-runner:latest
+  $ sudo docker exec -it gitlab-runner gitlab-runner register --run-untagged --locked=false
+  ```
+- The reddit application code was added to the repository.
+- An unit test for the reddit application is added.
+- `dev` stage and environment are defined.
+- `stage` and `production` stages are defined.
+- `stage` and `production` stages are limited to run only for tags.
+- A dynamic environment for branches was added.
+- The reddit application container building is implemented.
+
+  Registering GitLab runner to use `docker` and `privileged` mode in order to be able to build docker images:
+  ```
+  $ ssh -i ~/.ssh/appuser gitlab@34.76.120.42
+  $ sudo docker run -d --name gitlab-runner --restart always \
+  >   -v /srv/gitlab-runner/config:/etc/gitlab-runner \
+  >   -v /var/run/docker.sock:/var/run/docker.sock \
+  >   gitlab/gitlab-runner:latest
+  $ sudo docker exec -it gitlab-runner gitlab-runner register \
+  >   --url http://34.76.120.42/ \
+  >   --registration-token A1QzuKmatFF3QYoxT-M4 \
+  >   --executor docker \
+  >   --docker-image "docker:19.03.1" \
+  >   --docker-privileged \
+  >   --run-untagged \
+  >   --locked=false
+  ```
+- A server creation and the application deployment for review environment is implemented.
+
+  The following GitLab CI variables are required to be defined:
+  - `DOCKER_HUB_LOGIN` -- docker hub login;
+  - `DOCKER_HUB_PASSWD` -- docker hub password;
+  - `GCP_PROJECT_NAME` -- a name of GCP project where GitLab is deployed;
+  - `GCP_SERVICE_ACCOUNT_KEY` -- base64-encoded GCP service account key.
+- GitLab runners creation is implemented.
+
+  ```
+  $ cd gitlab-ci/gitlab/ansible
+  $ ansible-playbook site.yml --extra-vars "runner_token=uLEPyD8FR_9mjEhx_cG3 runners_count=2" --tags=create_runners
+  ```
+- GitLab integration with Slack is implemented.
+
+  You can check GitLab notifications here: https://devops-team-otus.slack.com/archives/GSFU43CHG.

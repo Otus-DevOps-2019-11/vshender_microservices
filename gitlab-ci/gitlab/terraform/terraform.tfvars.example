@@ -1,0 +1,3 @@
+project            = "docker-272823"
+public_key_path    = "~/.ssh/appuser.pub"
+gitlab_disk_image  = "ubuntu-1804-lts"

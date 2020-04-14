@@ -1,0 +1,27 @@
+version: '3.3'
+
+services:
+  mongo:
+    image: mongo:4.2.5
+    volumes:
+      - mongo_db:/data/db
+    networks:
+      - reddit
+
+  reddit:
+    image: {{ REDDIT_APP_IMAGE }}
+    environment:
+      - DATABASE_URL=mongo:27017/user_posts
+    ports:
+      - "9292:9292"
+    networks:
+      - reddit
+
+volumes:
+  mongo_db:
+
+volumes:
+  mongo_db:
+
+networks:
+  reddit:
