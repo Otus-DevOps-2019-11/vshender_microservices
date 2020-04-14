@@ -400,3 +400,4 @@ vshender microservices repository
   ```
 
   DockerHub profile: https://hub.docker.com/u/vshender.
+- MongoDB monitoring was implemented using [mongodb_exporter](https://github.com/percona/mongodb_exporter).
