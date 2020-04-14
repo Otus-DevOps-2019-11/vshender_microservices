@@ -370,3 +370,15 @@ vshender microservices repository
 
   $ docker-machine ip docker-host
   ```
+- A Prometheus Docker image is built to monitor the application.
+
+  ```
+  $ cd monitoring/prometheus
+  $ export USERNAME=vshender
+  $ docker build -t $USERNAME/prometheus .
+  ```
+- The application microservices images are built.
+  ```
+  $ for srv in ui post-py comment; do cd src/$srv; bash docker_build.sh; cd -; done
+  ```
+- Prometheus service was added to `docker/docker-compose.yml` file.
