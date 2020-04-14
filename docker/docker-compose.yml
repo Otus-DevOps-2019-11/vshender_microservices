@@ -64,6 +64,11 @@ services:
     environment:
       - MONGODB_URI=mongodb://db:27017
 
+  blackbox-exporter:
+    image: ${USERNAME}/blackbox-exporter
+    networks:
+      - front_net
+
 volumes:
   post_db:
   prometheus_data:

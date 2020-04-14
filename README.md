@@ -401,3 +401,4 @@ vshender microservices repository
 
   DockerHub profile: https://hub.docker.com/u/vshender.
 - MongoDB monitoring was implemented using [mongodb_exporter](https://github.com/percona/mongodb_exporter).
+- Blackbox monitoring was implemented using [blackbox_exporter](https://github.com/prometheus/blackbox_exporter).
