@@ -37,17 +37,17 @@ GEM
     nio4r (2.5.2)
     puma (4.3.3)
       nio4r (~> 2.0)
-    rack (2.2.2)
-    rack-protection (2.0.8.1)
+    rack (2.2.3)
+    rack-protection (2.2.0)
       rack
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
     rake (13.0.1)
-    ruby2_keywords (0.0.2)
-    sinatra (2.0.8.1)
+    ruby2_keywords (0.0.5)
+    sinatra (2.2.0)
       mustermann (~> 1.0)
-      rack (~> 2.0)
-      rack-protection (= 2.0.8.1)
+      rack (~> 2.2)
+      rack-protection (= 2.2.0)
       tilt (~> 2.0)
     sshkit (1.21.0)
       net-scp (>= 1.1.2)
@@ -70,7 +70,7 @@ DEPENDENCIES
   mongo
   puma
   rack-test
-  sinatra (~> 2.0.1)
+  sinatra (~> 2.2.0)
 
 BUNDLED WITH
    1.16.1
